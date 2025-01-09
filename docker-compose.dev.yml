@@ -1,7 +1,7 @@
 services:
   serge:
     restart: on-failure
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile.dev
     volumes:
@@ -11,9 +11,9 @@ services:
       - weights:/usr/src/app/weights/
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - "8008:8008"
-      - "9124:9124"
-
+      - 8008:8008
+      - 9124:9124
+      - 5678:5678
 volumes:
   datadb:
   weights:

@@ -21,12 +21,13 @@ detect_cpu_features() {
 }
 
 # Check if the CPU architecture is aarch64/arm64
-if [ "$cpu_arch" = "aarch64" ]; then
-	pip_command="python -m pip install -v llama-cpp-python==$LLAMA_PYTHON_VERSION --only-binary=:all: --extra-index-url=https://gaby.github.io/arm64-wheels/"
+if [ "$cpu_arch" = "aarch64" ] || [ "$cpu_arch" = "arm64" ]; then
+	pip_command="python -m pip install -v llama-cpp-python==$LLAMA_PYTHON_VERSION --only-binary=:all: --extra-index-url=https://abetlen.github.io/llama-cpp-python/whl/cpu/"
 else
-	# Use @jllllll provided wheels
-	cpu_feature=$(detect_cpu_features)
-	pip_command="python -m pip install -v llama-cpp-python==$LLAMA_PYTHON_VERSION --only-binary=:all: --extra-index-url=https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/$cpu_feature/cpu"
+	# Use @smartappli provided wheels
+	#cpu_feature=$(detect_cpu_features)
+	#pip_command="python -m pip install -v llama-cpp-python==$LLAMA_PYTHON_VERSION --only-binary=:all: --extra-index-url=https://abetlen.github.io/llama-cpp-python/whl/cpu-$cpu_feature/"
+	pip_command="python -m pip install -v llama-cpp-python==$LLAMA_PYTHON_VERSION --only-binary=:all: --extra-index-url=https://abetlen.github.io/llama-cpp-python/whl/cpu/"
 fi
 
 echo "Recommended install command for llama-cpp-python: $pip_command"
@@ -56,10 +57,16 @@ redis-server /etc/redis/redis.conf &
 cd /usr/src/app/web || exit 1
 npm run dev -- --host 0.0.0.0 --port 8008 &
 
+python -m pip install debugpy -t /tmp
+
 # Start the API
 cd /usr/src/app/api || exit 1
-hypercorn_cmd="hypercorn src.serge.main:app --bind 0.0.0.0:8008"
-[ "$SERGE_ENABLE_IPV6" = true ] && hypercorn_cmd+=" --bind [::]:8008"
+hypercorn_cmd="python /tmp/debugpy --listen 0.0.0.0:5678 -m hypercorn src.serge.main:api_app --reload --bind 0.0.0.0:9124"
+if [ "$SERGE_ENABLE_IPV6" = true ] && [ "$SERGE_ENABLE_IPV4" != true ]; then
+	hypercorn_cmd="python /tmp/debugpy --listen 0.0.0.0:5678 -m hypercorn src.serge.main:api_app --reload --bind [::]:9124"
+elif [ "$SERGE_ENABLE_IPV4" = true ] && [ "$SERGE_ENABLE_IPV6" = true ]; then
+	hypercorn_cmd="python /tmp/debugpy --listen 0.0.0.0:5678 -m hypercorn src.serge.main:api_app --reload --bind 0.0.0.0:9124 --bind [::]:9124"
+fi
 
 $hypercorn_cmd || {
 	echo 'Failed to start main app'

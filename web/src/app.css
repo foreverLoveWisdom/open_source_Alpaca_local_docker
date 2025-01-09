@@ -18,7 +18,7 @@
   width: auto;
 }
 
-markdown. .hljs {
+markdown .hljs {
   background: hsl(var(--b3)) !important;
 }
 
@@ -90,9 +90,11 @@ markdown. .hljs {
 .models-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 30px;
-  padding-top: 10px;
+  gap: 25px;
+  padding-left: 80px;
+  padding-right: 40px;
+  padding-top: 40px;
+  padding-bottom: 10px;
 }
 
 /* Model Accordion Styles */
@@ -132,9 +134,44 @@ markdown. .hljs {
 }
 
 .search-row {
+  position: fixed;
+  top: 5px;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 2rem;
+  padding-left: 80px;
+  padding-right: 40px;
+  padding-bottom: 0px;
+}
+
+main {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+div {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 0.5rem 1rem;
 }

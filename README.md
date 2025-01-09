@@ -45,9 +45,20 @@ volumes:
 
 Then, just visit http://localhost:8008, You can find the API documentation at http://localhost:8008/api/docs
 
+### 🌍 Environment Variables
+
+The following Environment Variables are available:
+
+| Variable Name         | Description                                             | Default Value                        |
+|-----------------------|---------------------------------------------------------|--------------------------------------|
+| `SERGE_DATABASE_URL`  | Database connection string                              | `sqlite:////data/db/sql_app.db`      |
+| `SERGE_JWT_SECRET`    | Key for auth token encryption. Use a random string      | `uF7FGN5uzfGdFiPzR`                  |
+| `SERGE_SESSION_EXPIRY`| Duration in minutes before a user must reauthenticate   | `60`                                 |
+| `NODE_ENV`            | Node.js running environment                             | `production`                         |
+
 ## 🖥️ Windows
 
-Ensure you have Docker Desktop installed, WSL2 configured, and enough free RAM to run models. 
+Ensure you have Docker Desktop installed, WSL2 configured, and enough free RAM to run models.
 
 ## ☁️ Kubernetes
 
@@ -58,36 +69,48 @@ Instructions for setting up Serge on Kubernetes can be found in the [wiki](https
 | Category      | Models |
 |:-------------:|:-------|
 | **Alfred** | 40B-1023 |
+| **BioMistral** | 7B |
 | **Code** | 13B, 33B |
 | **CodeLLaMA** | 7B, 7B-Instruct, 7B-Python, 13B, 13B-Instruct, 13B-Python, 34B, 34B-Instruct, 34B-Python |
-| **Falcon** | 7B, 7B-Instruct, 40B, 40B-Instruct |
-| **LLaMA 2**  | 7B, 7B-Chat, 7B-Coder, 13B, 13B-Chat, 70B, 70B-Chat, 70B-OASST |
-| **Med42** | 70B |
+| **Codestral** | 22B v0.1 |
+| **Gemma** | 2B, 1.1-2B-Instruct, 7B, 1.1-7B-Instruct, 2-9B, 2-9B-Instruct, 2-27B, 2-27B-Instruct |
+| **Gorilla** | Falcon-7B-HF-v0, 7B-HF-v1, Openfunctions-v1, Openfunctions-v2 |
+| **Falcon** | 7B, 7B-Instruct, 11B, 40B, 40B-Instruct |
+| **LLaMA 2** | 7B, 7B-Chat, 7B-Coder, 13B, 13B-Chat, 70B, 70B-Chat, 70B-OASST |
+| **LLaMA 3** | 11B-Instruct, 13B-Instruct, 16B-Instruct |
+| **LLaMA Pro** | 8B, 8B-Instruct |
+| **Mathstral** | 7B |
+| **Med42** | 70B, v2-8B, v2-70B |
 | **Medalpaca** | 13B |
-| **Medicine-LLM** | 13B |
-| **Meditron** | 7B, 7B-Chat, 70B |
-| **Mistral** | 7B-V0.1, 7B-Instruct-v0.2, 7B-OpenOrca |
+| **Medicine** | Chat, LLM |
+| **Meditron** | 7B, 7B-Chat, 70B, 3-8B |
+| **Meta-LlaMA-3** | 3-8B, 3.1-8B, 3.2-1B-Instruct, 3-8B-Instruct, 3.1-8B-Instruct, 3.2-3B-Instruct, 3-70B, 3.1-70B, 3-70B-Instruct, 3.1-70B-Instruct |
+| **Mistral** | 7B-V0.1, 7B-Instruct-v0.2, 7B-OpenOrca, Nemo-Instruct |
 | **MistralLite** | 7B |
 | **Mixtral** | 8x7B-v0.1, 8x7B-Dolphin-2.7, 8x7B-Instruct-v0.1 |
 | **Neural-Chat** | 7B-v3.3 | 
 | **Notus** | 7B-v1 |
 | **Notux** | 8x7b-v1 |
-| **OpenChat** | 7B-v3.5-1210 |
+| **Nous-Hermes 2** | Mistral-7B-DPO, Mixtral-8x7B-DPO, Mistral-8x7B-SFT |
+| **OpenChat** | 7B-v3.5-1210? 8B-v3.6-20240522 |
+| **OpenCodeInterpreter** | DS-6.7B, DS-33B, CL-7B, CL-13B, CL-70B |
 | **OpenLLaMA** | 3B-v2, 7B-v2, 13B-v2 |
 | **Orca 2** | 7B, 13B |
-| **Phi 2** | 2.7B |
+| **Phi** | 2-2.7B, 3-mini-4k-instruct, 3.1-mini-4k-instruct, 3.1-mini-128k-instruct,3.5-mini-instruct, 3-medium-4k-instruct, 3-medium-128k-instruct |
 | **Python Code** | 13B, 33B |
 | **PsyMedRP** | 13B-v1, 20B-v1 |
 | **Starling LM** | 7B-Alpha |
+| **SOLAR** | 10.7B-v1.0, 10.7B-instruct-v1.0 |
+| **TinyLlama** | 1.1B |
 | **Vicuna** | 7B-v1.5, 13B-v1.5, 33B-v1.3, 33B-Coder |
-| **WizardLM** | 7B-v1.0, 13B-v1.2, 70B-v1.0 |
+| **WizardLM** | 2-7B, 13B-v1.2, 70B-v1.0 |
 | **Zephyr** | 3B, 7B-Alpha, 7B-Beta |
 
-Additional models can be requested by opening a GitHub issue.
+Additional models can be requested by opening a GitHub issue. Other models are also available at [Serge Models](https://github.com/Smartappli/serge-models).
 
 ## ⚠️ Memory Usage
 
-LLaMA will crash if you don't have enough available memory for the model:
+LLaMA will crash if you don't have enough available memory for the model
 
 ## 💬 Support
 
@@ -106,4 +129,30 @@ To run Serge in development mode:
 git clone https://github.com/serge-chat/serge.git
 cd serge/
 docker compose -f docker-compose.dev.yml up --build
+```
+
+The solution will accept a python debugger session on port 5678. Example launch.json for VSCode:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Remote Debug",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/api",
+                    "remoteRoot": "/usr/src/app/api/"
+                }
+            ],
+            "justMyCode": false
+        }
+    ]
+}
 ```
